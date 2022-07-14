@@ -37,3 +37,4 @@ runs:
         user-email: ${{ inputs.user-email }}
     - name: Get the validation output
       run: echo "${{ steps.validate.outputs.is-valid }}"
+      shell: bash
