@@ -1,0 +1,40 @@
+name: 'Composite'
+description: 'Demonstrate combining actions'
+inputs:
+  my-text:
+    description: 'Text to convert to ASCII art'
+    required: true
+    default: 'WOW'
+  user-name:
+    description: 'Name of User'
+    required: true
+    default: 'Tim'
+  user-age:
+    description: 'Age of User'
+    required: true
+    default: '35'
+  user-email:
+    description: 'Email of User'
+    required: true
+    default: 'admin@example.com'
+outputs:
+  is-valid:
+    description: 'Are inputs valid for schema object'
+runs:
+  using: "composite"
+  steps:
+    steps:
+      - name: ASCII art action step
+        id: art
+        uses: Spots87/ascii-action@v1
+        with:
+          my-text: 'Neato'
+      - name: Validate inputs against schema
+        id: validate
+        uses: Spots87/validate-schema-js@v1
+        with:
+          user-name: 'Guy'
+          user-age: '45'
+          user-email: 'joeCool@example.com'
+      - name: Get the validation output
+        run: echo "${{ steps.validate.outputs.is-valid }}"
